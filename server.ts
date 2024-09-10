@@ -5,7 +5,6 @@ import { handleSockets } from "./src/sockets";
 require("dotenv").config();
 const port = process.env.SERVER_PORT || 3000;
 const uri: any = process.env.URI;
-console.log("fuck:", uri);
 
 const ws_port: any = process.env.WS_PORT;
 handleSockets(Number(ws_port));
@@ -13,7 +12,6 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 app.use(cors());
-console.log(Number(port));
 
 app.listen(port, async () => {
   await connectToDatabase(uri);
