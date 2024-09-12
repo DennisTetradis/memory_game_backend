@@ -1,19 +1,29 @@
 import express, { Request, Response } from "express";
 import { connectToDatabase, save_score_db, get_scoreboard } from "./src/db";
 import { handleSockets } from "./src/sockets";
+import https from "https";
 
 require("dotenv").config();
 const port = process.env.SERVER_PORT || 3000;
 const uri: any = process.env.URI;
-
 const ws_port: any = process.env.WS_PORT;
+
 handleSockets(Number(ws_port));
 const cors = require("cors");
 const app = express();
+
+const https_server = https.createServer(
+  {
+    key: process.env.HTTPS_KEY,
+    cert: process.env.HTTPS_CERT,
+  },
+  app
+);
+
 app.use(express.json());
 app.use(cors());
 
-app.listen(port, async () => {
+https_server.listen(443, async () => {
   await connectToDatabase(uri);
   console.log("Server running!");
 });
