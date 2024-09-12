@@ -2,6 +2,9 @@ import express, { Request, Response } from "express";
 import { connectToDatabase, save_score_db, get_scoreboard } from "./src/db";
 import { handleSockets } from "./src/sockets";
 import https from "https";
+// import fs from "fs"
+import { readFileSync } from "node:fs";
+import { readFile } from "fs";
 
 require("dotenv").config();
 const port = process.env.SERVER_PORT || 3000;
@@ -14,8 +17,8 @@ const app = express();
 
 const https_server = https.createServer(
   {
-    key: process.env.HTTPS_KEY,
-    cert: process.env.HTTPS_CERT,
+    key: readFileSync(String(process.env.HTTPS_KEY)),
+    cert: readFileSync(String(process.env.HTTPS_CERT)),
   },
   app
 );
