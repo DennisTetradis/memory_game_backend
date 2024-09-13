@@ -3,8 +3,8 @@ import { connectToDatabase, save_score_db, get_scoreboard } from "./src/db";
 import { handleSockets } from "./src/sockets";
 import https from "https";
 // import fs from "fs"
-import { readFileSync } from "node:fs";
-import { readFile } from "fs";
+// import { readFileSync } from "node:fs";
+// import { readFile } from "fs";
 
 require("dotenv").config();
 const port = process.env.SERVER_PORT || 3000;
@@ -15,18 +15,17 @@ handleSockets(Number(ws_port));
 const cors = require("cors");
 const app = express();
 
-const https_server = https.createServer(
-  {
-    key: readFileSync(String(process.env.HTTPS_KEY)),
-    cert: readFileSync(String(process.env.HTTPS_CERT)),
-  },
-  app
-);
+// const https_server = https.createServer(
+//   {
+//     key: readFileSync(String(process.env.HTTPS_KEY)),
+//     cert: readFileSync(String(process.env.HTTPS_CERT)),
+//   },
+//   app
+// );
 
 app.use(express.json());
 app.use(cors());
-
-https_server.listen(443, async () => {
+app.listen(port, async () => {
   await connectToDatabase(uri);
   console.log("Server running!");
 });
