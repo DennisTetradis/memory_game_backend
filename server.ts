@@ -1,27 +1,20 @@
 import express, { Request, Response } from "express";
 import { connectToDatabase, save_score_db, get_scoreboard } from "./src/db";
 import { handleSockets } from "./src/sockets";
-import https from "https";
-// import fs from "fs"
-// import { readFileSync } from "node:fs";
-// import { readFile } from "fs";
+import { readFileSync } from "node:fs";
+import { readFile } from "fs";
 
 require("dotenv").config();
-const port = process.env.SERVER_PORT || 3000;
-const uri: any = process.env.URI;
-const ws_port: any = process.env.WS_PORT;
+const port = readFileSync(String(process.env.SERVER_PORT)) || 3000;
+const uri = readFileSync(String(process.env.URI));
+const ws_port = readFileSync(String(process.env.WS_PORT));
+// process.env.SERVER_PORT || 3000;
+// const uri: any = process.env.URI;
+// const ws_port: any = process.env.WS_PORT;
 
 handleSockets(Number(ws_port));
-const cors = require("cors");
+const cors = require("cors")();
 const app = express();
-
-// const https_server = https.createServer(
-//   {
-//     key: readFileSync(String(process.env.HTTPS_KEY)),
-//     cert: readFileSync(String(process.env.HTTPS_CERT)),
-//   },
-//   app
-// );
 
 app.use(express.json());
 app.use(cors());
