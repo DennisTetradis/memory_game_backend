@@ -5,9 +5,9 @@ import { readFileSync } from "node:fs";
 import { readFile } from "fs";
 
 require("dotenv").config();
-const port = readFileSync(String(process.env.SERVER_PORT)) || 3000;
+const port = 3000;
 const uri = readFileSync(String(process.env.URI));
-const ws_port = readFileSync(String(process.env.WS_PORT));
+const ws_port = 8080;
 // process.env.SERVER_PORT || 3000;
 // const uri: any = process.env.URI;
 // const ws_port: any = process.env.WS_PORT;
